@@ -1,9 +1,7 @@
 package org.example;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
@@ -11,8 +9,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import javax.lang.model.element.Element;
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.Date;
 
 public class Main {
     public static WebDriver browser;
@@ -41,11 +41,6 @@ public class Main {
         WebDriverWait wait = new WebDriverWait(browser, Duration.ofSeconds(SECONDS_WAIT_TIME_FOR_ELEMENT));
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
     }
-
-//    public static void waitForElementToBeNotVisible(By by){
-//        WebDriverWait wait = new WebDriverWait(browser, Duration.ofSeconds(SECONDS_WAIT_TIME_FOR_ELEMENT));
-//        wait.until(ExpectedConditions.not(ExpectedConditions.visibilityOfElementLocated(by)));
-//    }
 
     public static void waitForUrlChange(String Url){
         WebDriverWait wait = new WebDriverWait(browser, Duration.ofSeconds(SECONDS_WAIT_TIME_FOR_ELEMENT));
@@ -106,11 +101,6 @@ public class Main {
         js.executeScript("window.scrollTo(0, 0)");
     }
 
-    public static void scrollCustom(String customNumber){
-        JavascriptExecutor js = (JavascriptExecutor) browser;
-        js.executeScript("window.scrollTo(0," + customNumber + ")");
-    }
-
     public static void scrollTillElementIsFound(By by){
         JavascriptExecutor js = (JavascriptExecutor) browser;
         js.executeScript("arguments[0].scrollIntoView();", findElement(by));
@@ -126,6 +116,16 @@ public class Main {
         WebElement element = findElement(by);
         Select select = new Select(element);
         select.selectByIndex(value);
+    }
+
+    public static void takeScreenshot(){
+        String name = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
+        File imgFile = ((TakesScreenshot) browser).getScreenshotAs(OutputType.FILE);
+        try{
+            FileUtils.copyFile(imgFile, new File("screenshots/" + name + "_screenshot.png"));
+        }catch (Exception ex){
+            System.out.println("Couldn't take a screenshot: " + ex.getMessage());
+        }
     }
 
 }

@@ -118,7 +118,6 @@ public class Test1 {
         //Clicking button NEXT
         Main.clickOnElement(PageElements.SHIPPING_NEXT);
         //Checking if filled in information matches billing address information
-        Main.waitForUrlChange("https://magento.softwaretestingboard.com/checkout/#shipping");
         String orderInformation = Main.getText(PageElements.PLACE_ORDER_INFORMATION);
         Assert.assertTrue(orderInformation.contains(billingDetails));
         //Place order, check url and success message

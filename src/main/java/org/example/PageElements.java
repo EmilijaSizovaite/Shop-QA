@@ -17,7 +17,6 @@ public class PageElements {
     public static final By SORT_BY = By.xpath("//*[@id=\"sorter\"]");
     public static final By DISPLAYED_ITEMS_NUMBER = By.xpath("//*[@id=\"toolbar-amount\"]/span[2]"); //used when items number are higher than items number shown per page. Example "Items 1-12 of 13"
     public static final By DISPLAYED_ITEMS_NUMBER_LESS = By.xpath("//*[@id=\"toolbar-amount\"]/span"); //used when items number per page are less than items number shown per page. Example "13 Items"
-    public static final By PAGE_ITEMS_LIMITER = By.xpath("/html/body/div[2]/main/div[3]/div[1]/div[4]/div[3]/div/select");
     public static final By SELECTED_ITEMS_DISPLAY_NUMBER = By.xpath("//*[@id=\"limiter\"]/option[@selected='selected']");
     public static final By REMOVE_ITEM = By.xpath("//a[@title='Remove item']");
     public static final By REMOVE_CONFIRMATION_TEXT = By.xpath("//*[@id=\"modal-content-150\"]/div");
@@ -70,7 +69,7 @@ public class PageElements {
     public static final By SHIPPING_NEXT = By.xpath("//*[@id=\"shipping-method-buttons-container\"]/div/button");
 
     //Review and payments page
-    public static final By PLACE_ORDER_INFORMATION = By.xpath("//*[@id=\"checkout-payment-method-load\"]/div/div/div[2]/div[2]/div[2]/div/div[2]");
+    public static final By PLACE_ORDER_INFORMATION = By.cssSelector("div.payment-method._active > div.payment-method-content > div.payment-method-billing-address > div > div.billing-address-details");
     public static final By PLACE_ORDER = By.xpath("//*[@id=\"checkout-payment-method-load\"]/div/div/div[2]/div[2]/div[4]/div/button");
 
     //Purchase completion page
