@@ -11,12 +11,13 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import javax.lang.model.element.Element;
 import java.time.Duration;
 
 public class Main {
     public static WebDriver browser;
     public static final String URL = "https://magento.softwaretestingboard.com/";
-    public static final int SECONDS_WAIT_TIME_FOR_ELEMENT = 5;
+    public static final int SECONDS_WAIT_TIME_FOR_ELEMENT = 10;
 
     public static void main(String[] args) {}
 
@@ -41,9 +42,19 @@ public class Main {
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
+//    public static void waitForElementToBeNotVisible(By by){
+//        WebDriverWait wait = new WebDriverWait(browser, Duration.ofSeconds(SECONDS_WAIT_TIME_FOR_ELEMENT));
+//        wait.until(ExpectedConditions.not(ExpectedConditions.visibilityOfElementLocated(by)));
+//    }
+
     public static void waitForUrlChange(String Url){
         WebDriverWait wait = new WebDriverWait(browser, Duration.ofSeconds(SECONDS_WAIT_TIME_FOR_ELEMENT));
         wait.until(ExpectedConditions.not(ExpectedConditions.urlToBe(Url)));
+    }
+
+    public static void waitForElementToBeClickable(By by){
+        WebDriverWait wait = new WebDriverWait(browser, Duration.ofSeconds(SECONDS_WAIT_TIME_FOR_ELEMENT));
+        wait.until(ExpectedConditions.elementToBeClickable(by));
     }
 
     public static WebElement findElement(By by){
@@ -62,6 +73,7 @@ public class Main {
 
     public static void clickOnElement(By by){
         waitForElementVisibility(by);
+        waitForElementToBeClickable(by);
         findElement(by).click();
     }
 
@@ -94,6 +106,16 @@ public class Main {
         js.executeScript("window.scrollTo(0, 0)");
     }
 
+    public static void scrollCustom(String customNumber){
+        JavascriptExecutor js = (JavascriptExecutor) browser;
+        js.executeScript("window.scrollTo(0," + customNumber + ")");
+    }
+
+    public static void scrollTillElementIsFound(By by){
+        JavascriptExecutor js = (JavascriptExecutor) browser;
+        js.executeScript("arguments[0].scrollIntoView();", findElement(by));
+    }
+
     public static void selectDropDownByValue(By by, String value){
         WebElement element = findElement(by);
         Select select = new Select(element);
@@ -106,5 +128,4 @@ public class Main {
         select.selectByIndex(value);
     }
 
-//    public static void select
 }

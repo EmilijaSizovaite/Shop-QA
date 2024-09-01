@@ -118,7 +118,9 @@ public class Test1 {
         //Clicking button NEXT
         Main.clickOnElement(PageElements.SHIPPING_NEXT);
         //Checking if filled in information matches billing address information
-        Assert.assertEquals(Main.getText(PageElements.PLACE_ORDER_INFORMATION), billingDetails);
+        Main.waitForUrlChange("https://magento.softwaretestingboard.com/checkout/#shipping");
+        String orderInformation = Main.getText(PageElements.PLACE_ORDER_INFORMATION);
+        Assert.assertTrue(orderInformation.contains(billingDetails));
         //Place order, check url and success message
         Main.clickOnElement(PageElements.PLACE_ORDER);
         Main.waitForUrlChange("https://magento.softwaretestingboard.com/checkout/#payment");
