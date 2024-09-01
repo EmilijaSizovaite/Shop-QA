@@ -104,8 +104,37 @@ public class Test2 {
 
     @Test(priority = 4)
     public static void completeOrder(){
+        String billingDetails =
+                "Fish The Fish\n" +
+                        "CatStreet\n" +
+                        "CatLand, Alabama 12345-6789\n" +
+                        "United States\n" +
+                        "+1234565";
+
+        //Checkout
         Main.scrollTillElementIsFound(PageElements.CHECKOUT);
         Main.actionClickOnElement(PageElements.CHECKOUT);
-        Test1.completeOrder();
+
+        //Filling all required fields
+        Main.sendKeys(PageElements.EMAIL, "random1@gmail.com");
+        Main.sendKeys(PageElements.FIRST_NAME, "Fish");
+        Main.sendKeys(PageElements.LAST_NAME, "The Fish");
+        Main.sendKeys(PageElements.STREET_ADDRESS, "CatStreet");
+        Main.sendKeys(PageElements.CITY, "CatLand");
+        Main.scrollToPageEnd();
+        Main.selectDropDownByIndex(PageElements.STATE, 1);
+        Main.sendKeys(PageElements.POSTAL_CODE, "12345-6789");
+        Main.sendKeys(PageElements.PHONE_NUMBER, "+1234565");
+        Main.clickOnElement(PageElements.SHIPPING_TABLE_RATE);
+        //Clicking button NEXT
+        Main.clickOnElement(PageElements.SHIPPING_NEXT);
+        //Checking if filled in information matches billing address information
+        String orderInformation = Main.getText(PageElements.PLACE_ORDER_INFORMATION);
+        Assert.assertTrue(orderInformation.contains(billingDetails));
+        //Place order, check url and success message
+        Main.clickOnElement(PageElements.PLACE_ORDER);
+        Main.waitForUrlChange("https://magento.softwaretestingboard.com/checkout/#payment");
+        Assert.assertEquals(Main.browser.getCurrentUrl(),"https://magento.softwaretestingboard.com/checkout/onepage/success/");
+        Assert.assertEquals(Main.getText(PageElements.COMPLETION_TEXT), "Thank you for your purchase!");
     }
 }

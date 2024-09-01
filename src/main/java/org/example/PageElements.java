@@ -70,7 +70,7 @@ public class PageElements {
 
     //Review and payments page
     public static final By PLACE_ORDER_INFORMATION = By.cssSelector("div.payment-method._active > div.payment-method-content > div.payment-method-billing-address > div > div.billing-address-details");
-    public static final By PLACE_ORDER = By.xpath("//*[@id=\"checkout-payment-method-load\"]/div/div/div[2]/div[2]/div[4]/div/button");
+    public static final By PLACE_ORDER = By.cssSelector("div.payment-method._active > div.payment-method-content > div.actions-toolbar > div > button");
 
     //Purchase completion page
     public static final By COMPLETION_TEXT = By.xpath("//*[@id=\"maincontent\"]/div[1]/h1/span");
